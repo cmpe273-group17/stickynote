@@ -52,4 +52,16 @@ public class Document {
 	private Date createdAt;
 	private Date updatedAt;
 	private String message;
+	
+	/**
+	 * 
+	 * Author : Prakruthi Nagaraj
+	 * 
+	 *        To convert toString
+	 */
+	@Override
+		 public String toString() {
+			 return new StringBuffer(" name : ").append(this.name.toString())
+					 .append(" message : ").append(this.message).toString();
+		  }
 }
