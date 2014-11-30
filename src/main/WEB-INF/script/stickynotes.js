@@ -1,4 +1,10 @@
-//author -- prakruthi
+/**
+ * 
+ *  Author : Prakruthi Nagaraj
+ *  
+ *  Ajax functions for Create, Delete, Save in JSON format   
+ */
+
                                      
 jQuery(document).ready(function() {
 var userdata = { "userid": "admin"};
