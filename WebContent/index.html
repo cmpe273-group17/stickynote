@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+	<title>Sticky Notes Web App</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css/slider.css" type="text/css" charset="utf-8" />
+	<script src="js/jquery-1.2.6.js" type="text/javascript"></script>
+	<script src="js/jquery.scrollTo-1.3.3.js" type="text/javascript"></script>
+	<script src="js/jquery.localscroll-1.2.5.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.serialScroll-1.2.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/slider.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.7.2.custom.css" type="text/css" />
+	<script type="text/javascript" src="script/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="script/jquery-ui-1.7.2.custom.min.js"></script>
+	<script type="text/javascript" src="script/jquery.stickynotes.js"></script>
+	<script type="text/javascript" src="script/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="script/jquery.ui.scrollbar.min.js"></script>
+	
+	<!-- The below line is added for javascript (client) -->
+	<script type="text/javascript" src="script/stickynotes.js"></script>
+	
+	<link rel="stylesheet" href="css/jquery.stickynotes.css" type="text/css" />
+	<link rel="stylesheet" href="css/jquery.ui.scrollbar.css" type="text/css" />
+</head>
+
+<body>
+	<div id="top-menu-tabs">
+		<div id="navcontainer">
+			<ul>
+				<li><a id = "new_note" class="selected menu_01">New1</a></li>
+
+				<li><a id = "delete_note" class="menu_02">Delete</a></li>
+
+				<li><a id = "save_note" class="menu_03">Save</a></li>
+			
+			</ul>
+		</div>
+	</div>
+
+	<div id="slider">
+		<div id="tooplate_wrapper">
+			<div id="tooplate_sidebar">
+				<div id="header">
+					<h1>Sticky Notes</h1>
+				</div>
+
+				<div id="scroll-box">
+				</div>
+			</div>
+
+			<div id="content">
+				<div class="scroll">
+					<div class="scrollContainer">
+						<div class="panel" id="home">
+							<div class="content_section">
+								<h2>Welcome to Sticky Notes</h2>
+							</div>
+							<div id="notes" style="width:500px;height:500px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+html,body {
+    height: 100%;
+}
+
+#sticky-container {
+	background:url(../images/bg_wood.jpg) repeat-x scroll 0 0;	
+	position: relative;
+	height:100%;
+}
+
+#sticky-container button {
+	position:absolute;
+	top:0px;
+	right:0px;
+	margin:4px;
+	padding:4px 10px 4px 7px;
+	border-color:#EEEEEE #DEDEDE #DEDEDE #EEEEEE;
+	border-style:solid;
+	border-width:1px;
+	font-weight:bold;
+	color:#529214;
+}
+
+#sticky-container button:hover {
+	background-color:#E6EFC2;
+	border:1px solid #C6D880;
+	color:#529214;	
+}
+
+#sticky-container textarea {
+	outline: 0 none;
+   background-color:transparent;
+	border:none;
+	font-family: 'Comic Sans MS',Textile,cursive;
+	font-size:16px;
+	overflow:hidden;
+	color:#999;
+
+	padding:15px 20px 0px 24px;
+	float:left;
+	
+}
+
+#sticky-container p {
+	font-family: 'Comic Sans MS',Textile,cursive;
+	font-size:16px;
+	overflow:hidden;
+	/*padding:0px;*/
+	padding:15px 20px 0px 24px;
+	display:block;
+	color:#444;
+}
+
+
+.background {
+    width: 500px;
+    height: 500px;
+    position: absolute; 
+    left: 0px; 
+    top: 0px; 
+    z-index: 0;
+}
+
+.stretch {
+    width:100%;
+    height:100%;
+	z-index:0;
+}
+
+/* import */
+.jSticky-large{
+	width:225px;
+	height:228px;
+	position: absolute;
+	z-index:999999;
+}
+.jSticky-medium{
+	width:500px;
+	height:500px;
+	
+	z-index:999999;
+}
+.jSticky-delete[class]{
+	background:transparent url(../images/delete.png) no-repeat top left;
+	height:14px;
+	width:14px;
+	position:absolute;
+	cursor:pointer;
+	z-index:4;
+}
+* .jSticky-delete{
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/delete.png');
+	height:14px;
+	width:14px;
+	position:absolute;
+	cursor:pointer;
+	z-index:4;
+}
+.jSticky-medium .jStickyNote textarea, .jSticky-medium .jStickyNote p{
+	font-size: 14px;
+	font-weight:bold;
+}
+.jSticky-large .jStickyNote textarea, .jSticky-large .jStickyNote p{
+	height:160px;
+	font-size: 16px;
+}
+
+.jStickyNote {
+	/*cursor :move;*/
+    position: absolute; 
+    left: 0px; 
+    top: 0px; 
+    z-index: 2;
+	height:500px;
+	overlay:hidden;
+	width:500px;
+	
+}
+
+a.fill-div {
+    display: block;
+    height: 100%;
+    width: 99%;
+    text-decoration: none;
+}
+
+/* import end */
