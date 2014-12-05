@@ -36,7 +36,7 @@ public class DropBoxDAO {
 	DbxClient client = null;
 
 	/**
-	 * This method will covert message into dropbox file
+	 * This method will convert message into dropbox file
 	 * 
 	 * @param path
 	 *            - Path of input file.
@@ -114,4 +114,106 @@ public class DropBoxDAO {
 		return client;
 	}
 
+	/**
+	 * This method will convert the file into PDF file.
+	 * 
+	 * @param user
+	 */
+	private void createPDF(String user) {
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		// BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
+		// outputStream);
+		File file = new File(user);
+		if (!file.isDirectory()) {
+			file.mkdir();
+		}
+		try {
+			client.getFile("/" + user + "/Temp.txt", null, outputStream);
+			byte[] byteArray = outputStream.toByteArray();
+			String output = new String(byteArray);
+			PDFFileConversion pdfa = new PDFFileConversion();
+			pdfa.createPDFFile(user + "/Test123.pdf", output);
+			outputStream.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+	}
+
+	/**
+	 * This method will remove the file for user whose access token is passed.
+	 * 
+	 * @param fileName
+	 * @param user
+	 * @param accessToken
+	 */
+	public boolean removeNote(String accessToken, User user, Document document) {
+
+		client = getClient(accessToken);
+		if (client == null) {
+			return false;
+		}
+		try {
+			client.delete("/" + user.getName() + "/" + document.getName());
+			// TODO call the code for updating mongoDB
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 
+	 * @param accessToken
+	 * @param user
+	 * @param document
+	 * @return
+	 */
+	public boolean removeAllNote(String accessToken, User user) {
+
+		int fileSize = 0;
+		for (; fileSize < user.getDocumentList().size(); fileSize++) {
+			removeNote(accessToken, user, user.getDocumentList().get(fileSize));
+		}
+
+		return true;
+	}
+
+	/**
+	 * This method will read all the files from Dropbox and set the message into
+	 * each document
+	 * 
+	 * @param accessToken
+	 * @param user
+	 */
+	public void getAllFiles(String accessToken, User user) {
+		// Check the size
+		if (user.getDocumentList().size() != 0) {
+
+			//
+			client = getClient(accessToken);
+
+			int fileSize = 0;
+			for (; fileSize < user.getDocumentList().size(); fileSize++) {
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+				try {
+					client.getFile("/" + user.getName() + "/"
+							+ user.getDocumentList().get(fileSize).getName(),
+							null, outputStream);
+					byte[] byteArray = outputStream.toByteArray();
+					String output = new String(byteArray);
+					user.getDocumentList().get(fileSize).setMessage(output);
+				} catch (DbxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}
+	}
 }
