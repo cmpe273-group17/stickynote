@@ -70,5 +70,14 @@ public class User {
 	private String email;
 	private List<Document> documentList;
 	private boolean alerts;
+	
+	
+	// Author : Prakruthi Nagaraj 
+	@Override
+	public String toString() {
+	    return new StringBuffer(" user : ").append(this.user)
+	                    .append(" password : ").append(this.password)
+	                    .append("email : ").append(this.email).toString();
+	        }
 
 }
