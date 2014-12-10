@@ -22,23 +22,110 @@
 	<script type="text/javascript" src="script/jquery.stickynotes.js"></script>
 	<script type="text/javascript" src="script/jquery.mousewheel.js"></script>
 	<script type="text/javascript" src="script/jquery.ui.scrollbar.min.js"></script>
-	
-	<!-- The below line is added for javascript (client) -->
-	<script type="text/javascript" src="script/stickynotes.js"></script>
-	
 	<link rel="stylesheet" href="css/jquery.stickynotes.css" type="text/css" />
 	<link rel="stylesheet" href="css/jquery.ui.scrollbar.css" type="text/css" />
+	
+	<!-- The below line is added for javascript (client) Author : Prakruthi Nagaraj -->
+	
+	<script type="text/javascript" src="script/stickynotes.js"></script>
+	
+	<script type="text/javascript" charset="utf-8">
+			var edited = function(note) {
+				alert("Edited note with id " + note.id + ", new text is: " + note.text);
+			}
+			var created = function(note) {
+				alert("Created note with id " + note.id + ", text is: " + note.text);
+				
+				$.ajax({ 
+    				type: 'POST', 
+    				url: 'http://localhost:8080/stickynotes/user/{user_id}/createnote', 
+    				data: { get_param: 'value' }, 
+    				dataType: 'json',
+    				done: function (data) { 
+        				$.each(data, function(index, element) {
+            				$('body').append($('<div>', {
+                				text: element.name
+            				}));
+        				});
+    				}
+				});
+				
+			}
+			
+			var deleted = function(note) {
+				alert("Deleted note with id " + note.id + ", text is: " + note.text);
+				
+				$.ajax({ 
+    				type: 'POST', 
+    				url: 'http://localhost:8080/stickynotes/user/{user_id}/deletenote', 
+    				data: { get_param: 'value' }, 
+    				dataType: 'json',
+    				done: function (data) { 
+        				$.each(data, function(index, element) {
+            				$('body').append($('<div>', {
+                				text: element.name
+            				}));
+        				});
+    				}
+				});
+				
+			}
+			
+			var moved = function(note) {
+				alert("Moved note with id " + note.id + ", text is: " + note.text);
+			}       
+			
+			var resized = function(note) {
+				alert("Resized note with id " + note.id + ", text is: " + note.text);
+			}                                       
+		
+			
+			jQuery(document).ready(function() {
+				var documents;
+				var user_id = "test_user";
+				var methodURL = "/SSO/api/stickynotes/user/"+ user_id +"/viewnotes";
+				$.ajax ({
+					// change the type to match controller 
+					type : "GET",
+					contentType: 'application/json',
+					dataType : "json",
+					url : methodURL,
+					success : function(data) {
+					 	// Write code here to perform anything with data.
+			            alert("success");
+			            documents = data.documentList;
+			            options.notes=documents;
+			            jQuery("#notes").stickyNotes(options);
+						 $('#scroll-box').scrollbar({orientation: 'vertical'});
+					},
+					error: function(e) {
+						alert("error");
+					}
+				});
+				var options = {
+					notes:[]
+					,resizable: false
+					,controls: true 
+					,editCallback: edited
+					,createCallback: created
+					,deleteCallback: deleted
+					,moveCallback: moved                                    
+					,resizeCallback: resized                                        
+				};
+			
+			});
+	</script>
 </head>
 
 <body>
 	<div id="top-menu-tabs">
 		<div id="navcontainer">
 			<ul>
-				<li><a id = "new_note" class="selected menu_01">New1</a></li>
+				<li><a id = "add_note"  class="selected menu_01">New</a></li>
 
-				<li><a id = "delete_note" class="menu_02">Delete</a></li>
+				<li><a id = "delete_note"  class="menu_02">Delete</a></li>
 
-				<li><a id = "save_note" class="menu_03">Save</a></li>
+				<li><a id = "save_note"  class="menu_03">Save</a></li>
 			
 			</ul>
 		</div>

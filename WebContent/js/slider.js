@@ -1,4 +1,4 @@
-
+// when the DOM is ready...
 $(document).ready(function () {
 
     var $panels = $('#slider .scrollContainer > div');
