@@ -59,7 +59,7 @@ jQuery(document)
 														success : function(data) {
 															window.location = "https://www.dropbox.com/1/oauth2/authorize?state="
 																	+ data.user
-																	+ "&locale=en_US&client_id=jpukeu8ca9bxvfv&response_type=code&redirect_uri=https://ec2-54-183-132-157.us-west-1.compute.amazonaws.com:8080/SSO/api/login";
+																	+ "&locale=en_US&client_id=jpukeu8ca9bxvfv&response_type=code&redirect_uri=http://localhost:8080/SSO/api/login";
 														},
 														error : function(e) {
 															$("#errmsg")
@@ -113,7 +113,7 @@ jQuery(document)
 															// alert(JSON.stringify(data))
 															// options =
 															// data.documentList;
-															location.href = "http://ec2-54-183-132-157.us-west-1.compute.amazonaws.com:8080/SSO/index.html";
+															location.href = "http://localhost:8080/SSO/index.html";
 
 														},
 														error : function(e) {
@@ -197,7 +197,7 @@ jQuery(document)
 
 					$("#delete_note").click(
 							function() {
-								//alert("delete note called ");
+								alert("Warning: The note will be deleted permanently !");
 								// hard code docdata
 								var docdata = {
 									"name" : "New Note"
@@ -215,6 +215,10 @@ jQuery(document)
 									url : methodURL,
 									data : JSON.stringify(docdata),
 									success : function(data) {
+										//alert("Delete refresh");
+										
+										//$("#p-note-1").text("");
+										
 										// Write code here to perform anything
 										// with data.
 										//alert(data)
@@ -227,18 +231,18 @@ jQuery(document)
 
 					$("#unlink").click(
 							function() {
-								//alert("unlink account called ");
+								alert("Please note: It will delete all your files.");
 
-								var methodURL = "/SSO/api/stickynotes/user/"
-										+ cookieUser.user + "/unlink";
+								var methodURL = "/SSO/api/stickynotes/user/"+ cookieUser.user + "/unlink";
 
 								$.ajax({
 									// change the type to match controller
-									type : "GET",
+									type : "DELETE",
 									contentType : 'application/json',
 									dataType : "json",
 									url : methodURL,
 									success : function(data) {
+										window.location = "http://localhost:8080/SSO/index.html";
 										// Write code here to perform anything
 										// with data.
 										//alert(data)
@@ -247,6 +251,14 @@ jQuery(document)
 									}
 								});
 
+							});
+					
+
+					$("#logout").click(
+							function() {
+								alert("Please Note: You will be logged out of the application");
+								window.location = "http://localhost:8080/SSO/homepage.html";
+								
 							});
 
 				});

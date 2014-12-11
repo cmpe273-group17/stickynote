@@ -20,8 +20,8 @@ public class GoogleMailAgent implements MailAgent {
 	private static final String SENDER_MAIL_ID = "cmpe273.17@gmail.com";
 	private static final String SENDER_PASSWORD = "sithuaung";
 	VelocityEngine velocityEngine;
-	private final String REGISTRATION_FORM = "./RegistrationMessage.vm";
-	private final String NOTES_FORM = "./NewNoteNotificationMessage.vm";
+	private final String REGISTRATION_FORM = "templates\\RegistrationMessage.vm";
+	private final String NOTES_FORM = "templates\\NewNoteNotificationMessage.vm";
 
 	@Override
 	public boolean sendNotesMail(String name, String mailID, String subject,

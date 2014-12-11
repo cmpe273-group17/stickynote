@@ -281,8 +281,8 @@ public class CreateNoteController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/stickynotes/user/{user_id}/unlink", produces = "application/json", method = RequestMethod.GET)
-	public @ResponseBody User unlinkDropbox(
+	@RequestMapping(value = "/stickynotes/user/{user_id}/unlink", produces = "application/json", method = RequestMethod.DELETE)
+	public @ResponseBody ModelAndView unlinkDropbox(
 			@PathVariable("user_id") String user_id) {
 		// The code added by Avadhut Thakar START
 		UserDAO userDao = UserDAO.getUserDAO();
@@ -290,15 +290,15 @@ public class CreateNoteController {
 		User user = userDao.getUserDetails(user_id);
 		int docSize = 0;
 		for (; docSize < user.getDocumentList().size(); docSize++) {
-			userDao.removeDocument(user.getUser(),
-					user.getDocumentList().get(docSize).getName());
-			dropBoxDao.removeAllNote(user.getAuthCode(), user);
+			dropBoxDao.removeAllNote("{\"access_token\" : \"" + user.getAuthCode()
+					+ "\"}", user);
 		}
-
-		userDao.updateUser(user, "");
+		
+		//userDao.updateUser(user, "");
+		userDao.deleteUser(user_id);
 		user.getUser();
 		// The code added by Avadhut Thakar END
-		return user;
+		return new ModelAndView("homepage.html");
 
 	}
 

@@ -295,4 +295,25 @@ public class UserDAO {
 		return new String(decodedBytes);
 	}
 
+	/**
+     * This method removes the unregister user from login
+     *
+     * @param user_id
+     * @return
+     */
+    public boolean deleteUser(String user_id) {
+        WriteResult userDetail = null;
+        BasicDBObject doc = null;
+        doc = new BasicDBObject("_id", user_id);
+        try {
+            userDetail = usersCollection.remove(doc);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        if (userDetail.getN() == 1)
+            return true;
+        else
+            return false;
+    }
 }
