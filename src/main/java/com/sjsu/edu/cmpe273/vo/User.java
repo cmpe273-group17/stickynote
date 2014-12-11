@@ -2,16 +2,8 @@ package com.sjsu.edu.cmpe273.vo;
 
 import java.util.List;
 
-/**
- * 
- * @author Avadhut Thakar
- * 
- * This class contains information related to User.
- */
 public class User {
-	/**
-	 * Constructor
-	 */
+
 	public User() {
 		super();
 	}
@@ -64,20 +56,20 @@ public class User {
 		this.alerts = alerts;
 	}
 
+	
+	public String getAuthCode() {
+		return authCode;
+	}
+
+	public void setAuthCode(String authCode) {
+		this.authCode = authCode;
+	}
+	
 	private String user;
 	private String name;
 	private String password;
 	private String email;
 	private List<Document> documentList;
 	private boolean alerts;
-	
-	
-	// Author : Prakruthi Nagaraj 
-	@Override
-	public String toString() {
-	    return new StringBuffer(" user : ").append(this.user)
-	                    .append(" password : ").append(this.password)
-	                    .append("email : ").append(this.email).toString();
-	        }
-
+	private String authCode;
 }

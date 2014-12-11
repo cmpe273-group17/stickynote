@@ -48,7 +48,7 @@
 				return false;
 			});
 			
-			jQuery("#delete_note").click(function() {
+			jQuery("#delete_note1").click(function() {
 				jQuery.fn.stickyNotes.deleteNote();
 				return false;
 			});		
@@ -67,10 +67,13 @@
 	
 	//Create new note, called on click of new button
 	jQuery.fn.stickyNotes.createNote = function() {
+		//alert("note_content");
 		var pos_x = 0;
 		var pos_y = 0;		
 		var note_id = jQuery.fn.stickyNotes.notes.length + 1;
-		var _note_content = jQuery(document.createElement('textarea'));
+		var _note_content = $(document.createElement('textarea')).attr("id", "textarea-note");
+		//_note_content.attr('id', 'newnote');
+		
 
 		var _div_note 	= 	jQuery(document.createElement('div')).addClass('jStickyNote');
 		

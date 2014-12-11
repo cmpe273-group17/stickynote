@@ -20,10 +20,24 @@ public class GoogleMailAgent implements MailAgent {
 	private static final String SENDER_MAIL_ID = "cmpe273.17@gmail.com";
 	private static final String SENDER_PASSWORD = "sithuaung";
 	VelocityEngine velocityEngine;
+	private final String REGISTRATION_FORM = "./RegistrationMessage.vm";
+	private final String NOTES_FORM = "./NewNoteNotificationMessage.vm";
 
 	@Override
-	public boolean sendMail(String name, String mailID, String subject,
+	public boolean sendNotesMail(String name, String mailID, String subject,
 			String msg) {
+
+		return sendMail(name, mailID, "New Note created", msg, NOTES_FORM);
+	}
+
+	@Override
+	public boolean sendRegistrationMail(String name, String mailID,
+			String subject, String msg) {
+		return sendMail(name, mailID, "Welcome to SticyNote app", msg, REGISTRATION_FORM);
+	}
+
+	private boolean sendMail(String name, String mailID, String subject,
+			String msg, String mailFrame) {
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -54,17 +68,18 @@ public class GoogleMailAgent implements MailAgent {
 			model.put("message", msg);
 			velocityEngine = new VelocityEngine();
 			velocityEngine.setProperty("resource.loader", "class");
-			velocityEngine.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+			velocityEngine
+					.setProperty("class.resource.loader.class",
+							"org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 			String text = VelocityEngineUtils.mergeTemplateIntoString(
-					velocityEngine, "templates/NewNoteNotificationMessage.vm",
-					"UTF-8", model);
+					velocityEngine, mailFrame, "UTF-8", model);
 
 			message.setText(text);
 			Transport.send(message);
 
 			return true;
 
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;

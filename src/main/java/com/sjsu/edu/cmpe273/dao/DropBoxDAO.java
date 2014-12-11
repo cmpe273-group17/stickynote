@@ -7,8 +7,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 import com.dropbox.core.DbxAuthInfo;
@@ -48,6 +46,7 @@ public class DropBoxDAO {
 		// File inputFile = new File("F:/Temp.txt");
 		BufferedInputStream inputStream = null;
 		client = getClient(accessToken);
+		System.out.println("========="+client);
 		if (client == null) {
 			return false;
 		}
@@ -56,21 +55,11 @@ public class DropBoxDAO {
 			InputStream is = new ByteArrayInputStream(document.getMessage()
 					.getBytes());
 			inputStream = new BufferedInputStream(is);
-
-			DbxEntry.File uploadedFile = client.uploadFile("/" + user.getName()
-					+ "/" + document.getName(), DbxWriteMode.add(), document
+			DbxEntry.File uploadedFile = client.uploadFile("/stickynotesapp/"
+					+ document.getName(), DbxWriteMode.add(), document
 					.getMessage().length(), inputStream);
-			System.out.println("Uploaded: " + uploadedFile.toString());
-
-			System.out.println("client root path " + client.getMetadata("/"));
-			DbxEntry.WithChildren listing = client.getMetadataWithChildren("/");
-			System.out.println("Files in the root path:");
-
-			for (DbxEntry child : listing.children) {
-				System.out.println("	" + child.name + ": " + child.toString());
-			}
+			//DbxEntry.WithChildren listing = client.getMetadataWithChildren("/");
 			inputStream.close();
-
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,6 +80,7 @@ public class DropBoxDAO {
 		// Read auth info file.
 		DbxAuthInfo authInfo;
 		try {
+			
 			authInfo = DbxAuthInfo.Reader.readFully(accessToken);
 		} catch (JsonReadException ex) {
 			System.err.println("Error in reading token: " + ex.getMessage());
@@ -101,16 +91,6 @@ public class DropBoxDAO {
 				"examples-account-info", userLocale);
 		DbxClient client = new DbxClient(requestConfig, authInfo.accessToken,
 				authInfo.host);
-		// // Make the /account/info API call.
-		// DbxAccountInfo dbxAccountInfo = null;
-		// try {
-		// dbxAccountInfo = client.getAccountInfo();
-		// } catch (DbxException ex) {
-		// ex.printStackTrace();
-		// System.err.println("Error in getAccountInfo(): " + ex.getMessage());
-		// System.exit(1);
-		// return null;
-		// }
 		return client;
 	}
 
@@ -119,7 +99,7 @@ public class DropBoxDAO {
 	 * 
 	 * @param user
 	 */
-	private void createPDF(String user) {
+	public void createPDF(String user, Document document) {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		// BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
 		// outputStream);
@@ -128,11 +108,11 @@ public class DropBoxDAO {
 			file.mkdir();
 		}
 		try {
-			client.getFile("/" + user + "/Temp.txt", null, outputStream);
+			client.getFile("/stickynoteapp/"+document.getName(), null, outputStream);
 			byte[] byteArray = outputStream.toByteArray();
 			String output = new String(byteArray);
 			PDFFileConversion pdfa = new PDFFileConversion();
-			pdfa.createPDFFile(user + "/Test123.pdf", output);
+			pdfa.createPDFFile(user + "/stickynoteapp/"+user+"/"+document.getName(), output);
 			outputStream.close();
 
 		} catch (Exception ex) {
@@ -155,7 +135,7 @@ public class DropBoxDAO {
 			return false;
 		}
 		try {
-			client.delete("/" + user.getName() + "/" + document.getName());
+			client.delete("/stickynotesapp/" + document.getName());
 			// TODO call the code for updating mongoDB
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -191,15 +171,12 @@ public class DropBoxDAO {
 	public void getAllFiles(String accessToken, User user) {
 		// Check the size
 		if (user.getDocumentList().size() != 0) {
-
-			//
 			client = getClient(accessToken);
-
 			int fileSize = 0;
 			for (; fileSize < user.getDocumentList().size(); fileSize++) {
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				try {
-					client.getFile("/" + user.getName() + "/"
+					client.getFile("/stickynotesapp/"
 							+ user.getDocumentList().get(fileSize).getName(),
 							null, outputStream);
 					byte[] byteArray = outputStream.toByteArray();
@@ -216,4 +193,17 @@ public class DropBoxDAO {
 			}
 		}
 	}
+
+	/**
+	 * This method will be update the file in the dropbox.
+	 * 
+	 * @param accessToken
+	 * @param user
+	 */
+	public void updateFile(String accessToken, User user, Document document) {
+		// Check the size
+		removeNote(accessToken, user, document);
+		createNote(accessToken, user, document);
+	}
+
 }

@@ -2,16 +2,8 @@ package com.sjsu.edu.cmpe273.vo;
 
 import java.util.Date;
 
-/**
- * 
- * @author Avadhut Thakar
- * 
- *         This class contains information related to documents.
- */
 public class Document {
-	/**
-	 * Constructor
-	 */
+
 	public Document() {
 		super();
 	}
@@ -48,16 +40,33 @@ public class Document {
 		this.message = message;
 	}
 
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	private String name;
 	private Date createdAt;
 	private Date updatedAt;
 	private String message;
-	
-	// Author : Prakruthi Nagaraj 
-	// Author : Prakruthi Nagaraj 
- 	@Override
- 	public String toString() {
-	 return new StringBuffer(" name : ").append(this.name.toString())
-			 .append(" message : ").append(this.message).toString();
-  	}
+	private String text;
+	private int id;
+
+	@Override
+	public String toString() {
+		return new StringBuffer(" name : ").append(this.name.toString())
+				.append(" message : ").append(this.message).toString();
+	}
+
 }

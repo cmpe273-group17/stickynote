@@ -15,7 +15,7 @@
     width: 100%;
     margin: 5px auto 15px;
     overflow: hidden;
-    background:#F7F3F3;
+    background:#FFFFCC;
 }
 
 .square-box a:focus{
@@ -84,7 +84,7 @@ height: 520px;
 
 	height: 47px;
 	padding: 5px 5px 5px 5px;
-	color: #000;
+	color: #fff;
 	font-size: 18px;
 	font-weight: 400;
 	text-align: center;
@@ -106,7 +106,7 @@ height: 520px;
 	width: 954px;
 	height: 753px;
 	margin: 20px auto 20px;
-	background: url(../images/intro-bg.jpg) top left no-repeat;
+	background: url(../images/tooplate_content_bg.jpg) top left no-repeat;
 }
 
 #tooplate_sidebar {
@@ -223,18 +223,18 @@ ul.navigation a {
 	
 	height: 47px;
 	padding: 12px 0 0 20px;
-	color: #000;
+	color: #fff;
 	font-size: 18px;
 	font-weight: 400;
     text-decoration: none;
 	font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-.menu_01 { background:  	#ffffff}
-.menu_02 { background:  	#ffffff}
-.menu_03 { background:  	#ffffff }
-.menu_04 { background:  	#ffffff }
-.menu_05 { background:  	#ffffff }
+.menu_01 { background:  	#CD853F}
+.menu_02 { background:  	#CD853F}
+.menu_03 { background:  	#CD853F }
+.menu_04 { background:  	#CD853F }
+.menu_05 { background:  	#CD853F }
 
 ul.navigation a:hover, ul.navigation a.selected {
 	color: #412810;

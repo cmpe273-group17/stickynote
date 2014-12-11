@@ -3,139 +3,250 @@
  *  Author : Prakruthi Nagaraj
  *  
  *  Ajax functions for Register, Log in, Create, Delete, Save in JSON format   
-*/
+ */
 
-jQuery(document).ready(function() {
+jQuery(document)
+		.ready(
+				function() {
 
+					$("#register_user")
+							.click(
+									function() {
 
-	$("#register_user").click(function() {
-		var userdata = { "user": "",
-				 "password": "",
-				 "email":""};
-		userdata.user = document.getElementById("new_username").value;
-		userdata.password = document.getElementById("new_password").value;
-		userdata.email = document.getElementById("new_emailid").value;
+										var userdata = {
+											"user" : "",
+											"password" : "",
+											"email" : "",
+											"name" : "",
+											"checkemail" : false
+										};
+										userdata.user = document
+												.getElementById("new_username").value;
+										userdata.name = document
+												.getElementById("username").value;
+										userdata.password = document
+												.getElementById("new_password").value;
+										userdata.email = document
+												.getElementById("new_emailid").value;
+										if (document
+												.getElementById("checkemail").checked) {
+											userdata.checkemail = true;
+											
+										} else {
+											userdata.checkemail = false;
+											
+										}
 
-		var methodURL = "/SSO/api/stickynotes/register";
-		//alert(JSON.stringify(docdata));
-		$.ajax ({
-			// change the type to match controller 
-			type : "POST",
-			contentType: 'application/json',
-			dataType : "json",
-			url : methodURL,
-			data : JSON.stringify(userdata),	
-			success : function(data) {
-			 	// Write code here to perform anything with data.
-	            alert(data)
-			},
-			errror: function(e) {
-				alert(e);
-			}
-		});
+										document.cookie = "user="
+												+ JSON.stringify(userdata);
 
-	});
+										if (userdata.user == ''
+												|| userdata.password == ''
+												|| userdata.email == '') {
+											alert("Enter all fields");
+											e.preventDefault();
+										} else {
 
-	
-$("#login_user").click(function() {
-	var userdata = { "user": "",
-			 "password": ""};
-	userdata.user = document.getElementById("emailid").value;
-	userdata.password = document.getElementById("password").value;
-	var methodURL = "/SSO/api/stickynotes/login";
-	//alert(JSON.stringify(userdata));
-	$.ajax ({
-		// change the type to match controller 
-		type : "POST",
-		contentType: 'application/json',
- 		dataType : "json",
-		url : methodURL,
-		data : JSON.stringify(userdata),	
-		success : function(data) {
-		 	// Write code here to perform anything with data.
-            alert(JSON.stringify(data))
-		},
-		errror: function(e) {
-			alert(e);
-		}
-	});
+											var methodURL = "/SSO/api/stickynotes/register";
+											$
+													.ajax({
+														type : "POST",
+														contentType : 'application/json',
+														dataType : "json",
+														url : methodURL,
+														data : JSON
+																.stringify(userdata),
+														success : function(data) {
+															window.location = "https://www.dropbox.com/1/oauth2/authorize?state="
+																	+ data.user
+																	+ "&locale=en_US&client_id=jpukeu8ca9bxvfv&response_type=code&redirect_uri=https://ec2-54-183-132-157.us-west-1.compute.amazonaws.com:8080/SSO/api/login";
+														},
+														error : function(e) {
+															$("#errmsg")
+																	.text(
+																			"Oops. Registration failed. Please try again after sometime.");
+														}
+													});
+										}
+									});
 
-});
+					$("#login_user")
+							.click(
+									function() {
 
+										var userdata = {
+											"user" : "",
+											"password" : ""
+										};
+										userdata.user = document
+												.getElementById("emailid").value;
+										userdata.password = document
+												.getElementById("password").value;
 
-$("#view_notes").click(function() {
-	var user_id = "test_user";
-	var methodURL = "/SSO/api/stickynotes/user/"+ user_id +"/viewnotes";
-	//alert(JSON.stringify(docdata));
-	$.ajax ({
-		// change the type to match controller 
-		type : "GET",
-		contentType: 'application/json',
-		dataType : "json",
-		url : methodURL,
-		success : function(data) {
-		 	// Write code here to perform anything with data.
-            alert(data)
-		},
-		errror: function(e) {
-		}
-	});
+										if (userdata.user == ''
+												|| userdata.password == '') {
+											alert("Enter all fields");
+											e.preventDefault();
+										} else {
 
-});
+											var methodURL = "/SSO/api/stickynotes/login";
+											// alert(JSON.stringify(userdata));
+											document.cookie = "user="
+													+ JSON.stringify(userdata);
+											// alert("logging in");
 
+											$
+													.ajax({
+														// change the type to
+														// match controller
+														type : "POST",
+														contentType : 'application/json',
+														dataType : "json",
+														url : methodURL,
+														data : JSON
+																.stringify(userdata),
+														success : function(data) {
+															// Write code here
+															// to perform
+															// anything with
+															// data.
+															// alert(JSON.stringify(data))
+															// options =
+															// data.documentList;
+															location.href = "http://ec2-54-183-132-157.us-west-1.compute.amazonaws.com:8080/SSO/index.html";
 
-$("#save_note").click(function() {
-	// hard code docdata
-	var docdata = { "name":"",
-				"message" : ""}
-	docdata.name = "getfrom";
-	docdata.message = "messge from text box";
-	// hardcoded user id
-	var user_id = "test_user";
-	var methodURL = "/SSO/api/stickynotes/user/"+ user_id +"/savenote";
-	
+														},
+														error : function(e) {
+															// alert("Some new
+															// err");
+															// alert("Got error
+															// "+e);
+															// $("#errmsg").val()
+															// = "Invalid User
+															// Id or Password.
+															// Please Login
+															// again";
+															$("#errmsg")
+																	.text(
+																			"Invalid User Id or Password. Please Login again.");
+														}
+													});
+										}
+									});
 
-	//alert(JSON.stringify(docdata));
-	$.ajax ({
-		// change the type to match controller 
-		type : "PUT",
-		contentType: 'application/json',
-		dataType : "json",
-		url : methodURL,
-		data : JSON.stringify(docdata),
-		success : function(data) {
-		 	// Write code here to perform anything with data.
-            alert(data)
-		},
-		errror: function(e) {
-		}
-	});
+					$("#view_notes").click(
+							function() {
+								var user_id = "test_user";
+								var methodURL = "/SSO/api/stickynotes/user/"
+										+ user_id + "/viewnotes";
+								//alert("Fetching notes");
+								$.ajax({
+									// change the type to match controller
+									type : "GET",
+									contentType : 'application/json',
+									dataType : "json",
+									url : methodURL,
+									success : function(data) {
+										// Write code here to perform anything
+										// with data.
+										//alert(data)
+									},
+									error : function(e) {
+										alert("error in fetching notes");
+									}
+								});
 
-});
+							});
 
-$("#delete_note").click(function() {
-	// hard code docdata
-	var docdata = { "name":"new_doc"}
-	// hardcoded user id
-	var user_id = "test_user";
-	var methodURL = "/SSO/api/stickynotes/user/"+ user_id +"/deletenote";
-	//alert(JSON.stringify(docdata));
-	$.ajax ({
-		// change the type to match controller 
-		type : "DELETE",
-		contentType: 'application/json',
-		dataType : "json",
-		url : methodURL,
-		data : JSON.stringify(docdata),
-		success : function(data) {
-		 	// Write code here to perform anything with data.
-            alert(data)
-		}, 
-		errror: function(e) {
-		}
-	});
+					$("#save_note").click(
+							function() {
+								//alert("Saving Note");
+								// hard code docdata
+								var docdata = {
+									"name" : "",
+									"message" : ""
+								}
+								docdata.name = "New Note";
+								docdata.message = $("#textarea-note").val();
+								//alert(docdata.message);
+								// hardcoded user id
+								// var user_id = "test_user";
+								var methodURL = "/SSO/api/stickynotes/user/"
+										+ cookieUser.user + "/savenote";
+//								alert("Saving note for user: "
+//										+ cookieUser.user);
 
-  });
+								// alert(JSON.stringify(docdata));
+								$.ajax({
+									// change the type to match controller
+									type : "PUT",
+									contentType : 'application/json',
+									dataType : "json",
+									url : methodURL,
+									data : JSON.stringify(docdata),
+									success : function(data) {
+										// Write code here to perform anything
+										// with data.
+										//alert(data)
+									},
+									errror : function(e) {
+									}
+								});
 
-});
+							});
 
+					$("#delete_note").click(
+							function() {
+								//alert("delete note called ");
+								// hard code docdata
+								var docdata = {
+									"name" : "New Note"
+								}
+								// hardcoded user id
+								// var user_id = "test_user";
+								var methodURL = "/SSO/api/stickynotes/user/"
+										+ cookieUser.user + "/deletenote";
+								// alert(JSON.stringify(docdata));
+								$.ajax({
+									// change the type to match controller
+									type : "DELETE",
+									contentType : 'application/json',
+									dataType : "json",
+									url : methodURL,
+									data : JSON.stringify(docdata),
+									success : function(data) {
+										// Write code here to perform anything
+										// with data.
+										//alert(data)
+									},
+									errror : function(e) {
+									}
+								});
+
+							});
+
+					$("#unlink").click(
+							function() {
+								//alert("unlink account called ");
+
+								var methodURL = "/SSO/api/stickynotes/user/"
+										+ cookieUser.user + "/unlink";
+
+								$.ajax({
+									// change the type to match controller
+									type : "GET",
+									contentType : 'application/json',
+									dataType : "json",
+									url : methodURL,
+									success : function(data) {
+										// Write code here to perform anything
+										// with data.
+										//alert(data)
+									},
+									error : function(e) {
+									}
+								});
+
+							});
+
+				});

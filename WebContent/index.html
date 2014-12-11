@@ -25,17 +25,27 @@
 	<link rel="stylesheet" href="css/jquery.stickynotes.css" type="text/css" />
 	<link rel="stylesheet" href="css/jquery.ui.scrollbar.css" type="text/css" />
 	
-	
 	<!-- The below line is added for javascript (client) Author : Prakruthi Nagaraj -->
 	
 	<script type="text/javascript" src="script/stickynotes.js"></script>
-	
+	<script>
+		var nameEQ = "user=";
+		var ca = document.cookie.split(';');
+		for(var i=0;i < ca.length;i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+			if (c.indexOf(nameEQ) == 0) 
+			var result =  c.substring(nameEQ.length,c.length);
+		}
+		var cookieUser = JSON.parse(result);
+		//alert("Gotttt user from cookie "+cookieUser.user);
+	</script>
 	<script type="text/javascript" charset="utf-8">
 			var edited = function(note) {
-				alert("Edited note with id " + note.id + ", new text is: " + note.text);
+				//alert("Edited note with id " + note.id + ", new text is: " + note.text);
 			}
 			var created = function(note) {
-				alert("Created note with id " + note.id + ", text is: " + note.text);
+				/*alert("Created note with id " + note.id + ", text is: " + note.text);
 				
 				$.ajax({ 
     				type: 'POST', 
@@ -49,12 +59,12 @@
             				}));
         				});
     				}
-				});
+				});*/
 				
 			}
 			
 			var deleted = function(note) {
-				alert("Deleted note with id " + note.id + ", text is: " + note.text);
+			/* 	alert("Deleted note with id " + note.id + ", text is: " + note.text);
 				
 				$.ajax({ 
     				type: 'POST', 
@@ -68,23 +78,23 @@
             				}));
         				});
     				}
-				});
+				}); */
 				
 			}
 			
 			var moved = function(note) {
-				alert("Moved note with id " + note.id + ", text is: " + note.text);
+				//alert("Moved note with id " + note.id + ", text is: " + note.text);
 			}       
 			
 			var resized = function(note) {
-				alert("Resized note with id " + note.id + ", text is: " + note.text);
+				//alert("Resized note with id " + note.id + ", text is: " + note.text);
 			}                                       
 		
 			
 			jQuery(document).ready(function() {
 				var documents;
-				var user_id = "test_user";
-				var methodURL = "/SSO/api/stickynotes/user/"+ user_id +"/viewnotes";
+				//var user_id = "test_user";
+				var methodURL = "/SSO/api/stickynotes/user/"+ cookieUser.user +"/viewnotes";
 				$.ajax ({
 					// change the type to match controller 
 					type : "GET",
@@ -93,14 +103,14 @@
 					url : methodURL,
 					success : function(data) {
 					 	// Write code here to perform anything with data.
-			            alert("success");
+			            
 			            documents = data.documentList;
 			            options.notes=documents;
 			            jQuery("#notes").stickyNotes(options);
 						 $('#scroll-box').scrollbar({orientation: 'vertical'});
 					},
 					error: function(e) {
-						alert("error");
+						//alert("error");
 					}
 				});
 				var options = {
@@ -120,19 +130,13 @@
 
 <body>
 	<div id="top-menu-tabs">
-	
-	
 		<div id="navcontainer">
 			<ul>
-				<li><a id = "add_note"  class="selected menu_01">New</a></li>
-				
-				<li><a id = "delete_note"  class="menu_02">Delete</a></li>
+				<li><a id = "add_note"  class="selected menu_01" style="cursor: pointer;">New</a></li>
 
-				<li><a id = "save_note"  class="menu_03">Save</a></li>
-				
-				<li><a href="http://localhost:8080/SSO/homepage.html" id = "logout"  class="menu_04">Logout</a></li>
-				
-		
+				<li><a id = "delete_note"  class="menu_02" style="cursor: pointer;">Delete</a></li>
+
+				<li><a id = "save_note"  class="menu_03" style="cursor: pointer;">Save</a></li>
 			
 			</ul>
 		</div>
@@ -143,13 +147,6 @@
 			<div id="tooplate_sidebar">
 				<div id="header">
 					<h1>Sticky Notes</h1>
-					<br>
-					</br>
-					<br>
-					</br>
-					<br>
-					</br>
-					<h3> All notes</h3>
 				</div>
 
 				<div id="scroll-box">
@@ -161,7 +158,7 @@
 					<div class="scrollContainer">
 						<div class="panel" id="home">
 							<div class="content_section">
-								<h2>Welcome to Sticky Notes</h2>
+								<h2>Welcome to Sticky Notes<img src="api/images/unlink.jpg" id="unlink" style="width: 50px;height: 50px;padding-left: 100px;cursor: pointer;"/></h2>
 								
 							</div>
 							<div id="notes" style="width:500px;height:500px;"></div>

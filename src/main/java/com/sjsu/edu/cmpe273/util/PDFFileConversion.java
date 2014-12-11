@@ -6,16 +6,8 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-/**
- * 
- * @author Avadhut Thakar
- * This class contains the method to convert given string into PDF File.
- * 
- */
 public class PDFFileConversion {
-	/**
-	 * Constructor.
-	 */
+
 	public PDFFileConversion() {
 		super();
 	}
