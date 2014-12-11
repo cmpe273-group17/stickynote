@@ -25,6 +25,7 @@
 	<link rel="stylesheet" href="css/jquery.stickynotes.css" type="text/css" />
 	<link rel="stylesheet" href="css/jquery.ui.scrollbar.css" type="text/css" />
 	
+	
 	<!-- The below line is added for javascript (client) Author : Prakruthi Nagaraj -->
 	
 	<script type="text/javascript" src="script/stickynotes.js"></script>
@@ -119,13 +120,19 @@
 
 <body>
 	<div id="top-menu-tabs">
+	
+	
 		<div id="navcontainer">
 			<ul>
 				<li><a id = "add_note"  class="selected menu_01">New</a></li>
-
+				
 				<li><a id = "delete_note"  class="menu_02">Delete</a></li>
 
 				<li><a id = "save_note"  class="menu_03">Save</a></li>
+				
+				<li><a href="http://localhost:8080/SSO/homepage.html" id = "logout"  class="menu_04">Logout</a></li>
+				
+		
 			
 			</ul>
 		</div>
@@ -136,6 +143,13 @@
 			<div id="tooplate_sidebar">
 				<div id="header">
 					<h1>Sticky Notes</h1>
+					<br>
+					</br>
+					<br>
+					</br>
+					<br>
+					</br>
+					<h3> All notes</h3>
 				</div>
 
 				<div id="scroll-box">
@@ -148,6 +162,7 @@
 						<div class="panel" id="home">
 							<div class="content_section">
 								<h2>Welcome to Sticky Notes</h2>
+								
 							</div>
 							<div id="notes" style="width:500px;height:500px;"></div>
 						</div>
